@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+{% block body %}
+<style>
+body{
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  margin: 0;
+}
+</style>
+</head>
+<body>
+ {# ici le formulaire #}
+ <div class="row">
+       <div class="col s6">
+ {{ form_start(inscription) }}
+        {{ form_row(inscription.adresseMail) }}
+        {{ form_row(inscription.numeroPasseport) }}
+        {{ form_row(inscription.dateDeNaissance) }}
+        {{ form_row(inscription.plainPassword.first) }}
+        {{ form_row(inscription.plainPassword.second) }}
+        {{ form_row(inscription.save) }}
+        {{ form_end(inscription) }}
+      </div>
+</div>
+</body>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Air Atlantique{% endblock %}
+{% block body %}
+<style>
+body{
+
+  z-index: 1;
+}
+form{
+  z-index: 2;
+  margin-top: 120px;
+}
+</style>
+<div class="row">
+    <form class="col s12" method="post" action="{{ path("search_vol")}}">
+      <div class="row">
+        <div class="input-field col s4">
+          <i class="material-icons prefix">airplanemode_active</i>
+          <input required="required" name="aeroport_depart" id="icon_prefix" type="text" class="validate">
+          <label for="icon_prefix">Aeroport de départ</label>
+        </div>
+        <div class="input-field col s4">
+          <i class="material-icons prefix">airplanemode_active</i>
+          <input required="required" name="aeroport_arriver" id="icon_telephone" type="text" class="validate">
+          <label for="icon_telephone">Aeroport d'arriver</label>
+        </div>
+        <div class="input-field col s4">
+          <i class="material-icons prefix">phone</i>
+          <input required="required" placeholder="Placeholder" name="date_depart" id="icon_telephone" type="date" class="validate">
+          <label for="icon_telephone">Date de départ</label>
+        </div>
+        <label>Choissisez votre classe</label>
+        <select required="required" name="classe" class="browser-default">
+          <option value="" disabled selected>Choose your option</option>
+          <option value="4">Economique</option>
+          <option value="1">Business</option>
+          <option value="3">Premiére</option>
+          <option value="5">Premium-Eco</option>
+        </select>
+        <label>Choissisez votre Tarif</label>
+        <select required="required" name="tarif" class="browser-default">
+          <option value="" disabled selected>Choose your option</option>
+          <option value="2">Adulte</option>
+          <option value="1">Enfant</option>
+          <option value="3">Senior</option>
+        </select>
+        <div class="input-field col s4">
+          <button type="submit" class="btn waves-effect waves-light">Rechercher
+     <i class="material-icons right">send</i>
+   </button>
+      </div>
+    </div>
+    </form>
+  </div>
+{% endblock %}
+{% block javascript %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+{% endblock %}

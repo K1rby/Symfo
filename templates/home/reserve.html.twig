@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Air Atlantique{% endblock %}
+{% block body %}
+{{ dump(vol) }}
+{{ dump(prix) }}
+<body>
+    {% for user in vol %}
+    {% for users in prix %}
+    <form method="post" action="{{ path("ajouter",{ "idVole":user.idVol, "idPrix":users.idPrix }) }}">
+    <h5>{{ user.dated|date("H:i") }}</h5>
+    <i class="material-icons prefix"> linear_scale</i>
+    <h5>{{ user.datea|date("H:i") }}</h5>
+    <h5>{{ user.idTrajet.duree }}</h5>
+    <h5>{{ user.idTrajet.aeroporta.ville }}</h5>
+    <h5 name="id_voyage">{{ user.idTrajet.idVoyage.idVoyage}}</h5>
+    <h5>Classe: {{ users.idClasse.nom }}</h5>
+    <h5>Tarif: {{ users.idTarif.nom }}</h5>
+    <h5>Prix: {{ users.prix }}</h5>
+    <h5>{{ user.idTrajet.aeroportd.ville }}</h5>
+
+   <button class="btn waves-effect waves-light" type="submit" name="action">Continuer
+   <i class="material-icons right">send</i>
+   </button>
+ </form>
+     {% endfor %}
+     {% endfor %}
+</body>
+{% endblock %}
