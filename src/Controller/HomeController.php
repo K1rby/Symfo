@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\Constraints\DateTime;
 use App\Entity\User;
 use App\Entity\Aeroport;
 use App\Entity\Vol;
@@ -32,7 +31,7 @@ class HomeController extends AbstractController
     /**
     * @Route("/home/search_vol", name="search_vol")
     */
-    public function search(Request $request)
+    public function search(Request $request): Response
     {
       if(empty($_POST))
       {
@@ -45,29 +44,31 @@ class HomeController extends AbstractController
       $classe = $_POST['classe'];
       $tarif = $_POST['tarif'];
 
-      $date = date("Y-m-d", strtotime($date_depart));
-      echo ($date);
-
       $entityManager = $this->getDoctrine()->getManager(); //on appelle Doctrine
       $recup_depart = $entityManager->getRepository(Aeroport::class)->findBy(array("ville" => $depart));
       $recup_arriver = $entityManager->getRepository(Aeroport::class)->findBy(array("ville" => $arriver));
       $getTrajet = $entityManager->getRepository(Trajet::class)->findBy(array("aeroporta" => $recup_arriver, "aeroportd" => $recup_depart));
-      $getVol = $entityManager->getRepository(Vol::class)->findOneBy(array('idTrajet' => $getTrajet));
+    //  $getVol = $entityManager->getRepository(Vol::class)->findOneBy(array('idTrajet' => $getTrajet));
       $getPrix = $entityManager->getRepository(Prix::class)->findBy(array('idClasse' => $classe, 'idTarif' => $tarif));
+    //  $query = $entityManager->createQuery( //creation de la requête
+      //  select * from vol where DATE_FORMAT(dateD, '%d/%m/%Y') = $date and id_trajet = $getTrajet);
+       $queryBuilder = $entityManager->getRepository(Vol::class)->createQueryBuilder('u');
+       $queryBuilder->andWhere("DATE_FORMAT(u.dated, '%Y-%m-%d') = :date and u.idTrajet = :idTrajet");
+       $queryBuilder->setParameter('date', $date_depart);
+       $queryBuilder->setParameter('idTrajet', $getTrajet);
+       $getVol = $queryBuilder->getQuery()->getResult();
       if ($getVol == NULL)
       {
         return $this->render('home/error.html.twig');
       }
-      $id = $getVol->getIdVol();
-      $getVoyage = $getVol->getIdVoyage();
-
-      //$products = $query->getResult();
+    // $id = $getVol->getIdVol();
+    //$getVoyage = $getVol->getIdVoyage();
 
       return $this->render('home/searchVol.html.twig', [
           'controller_name' => 'HomeController',
           'vol' => $getVol,
-          'id_vol' => $id,
-          'id_voyage' => $getVoyage,
+          //'id_vol' => $id,
+          //'id_voyage' => $getVoyage,
           'prix' => $getPrix,
       ]);
     }
