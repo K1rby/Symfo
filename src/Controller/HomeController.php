@@ -10,6 +10,7 @@ use App\Entity\User;
 use App\Entity\Aeroport;
 use App\Entity\Vol;
 use App\Entity\Billet;
+use App\Entity\HistoriqueBillet;
 use App\Entity\Prix;
 use App\Entity\Classe;
 use App\Entity\Tarif;
@@ -119,6 +120,15 @@ class HomeController extends AbstractController
       $billet->setIdPrix($id_prix);
       $entityManager->persist($billet);
       $entityManager->flush();
-      return $this->redirectToRoute("home_users"); //Le home
+
+      $historique_billet = new HistoriqueBillet();
+      $entityManager = $this->getDoctrine()->getManager();
+      $historique_billet->setIdPassager($user);
+      $historique_billet->setIdPrix($id_prix);
+      $historique_billet->setDateAchat(new \DateTime('now'));
+      $entityManager->persist($historique_billet);
+      $entityManager->flush();
+
+      return $this->redirectToRoute("home"); //Le home
   }
 }

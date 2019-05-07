@@ -24,12 +24,26 @@
          <div class="nav-wrapper">
            <a href="{{ path("home")}}"  class="brand-logo">Air Atlantique</a>
            <ul id="nav-mobile" class="right hide-on-med-and-down">
+             {% if is_granted('ROLE_USER') %}
              <li>
-               <a href="{{ path("app_login")}}" class="waves-effect waves-light btn pink darken-1 modal-trigger">Mon Compte
+               <a href="{{ path("member")}}" class="waves-effect waves-light btn pink darken-1 modal-trigger">Mon Compte
                  <i class="material-icons left">person</i>
                </a>
              </li>
-            {% block li %}{% endblock %}
+             {% endif %}
+             {% if is_granted('ROLE_USER') %}
+             <li>
+               <a href="{{ path("app_logout")}}" class="waves-effect waves-light btn pink darken-1 modal-trigger">Déconnexion
+                 <i class="material-icons left">exit_to_app</i>
+               </a>
+             </li>
+             {% else %}
+             <li>
+               <a href="{{ path("app_login")}}" class="waves-effect waves-light btn pink darken-1 modal-trigger">Connexion
+                 <i class="material-icons left">assignment_ind</i>
+               </a>
+             </li>
+             {% endif %}
            </ul>
          </div>
        </nav>

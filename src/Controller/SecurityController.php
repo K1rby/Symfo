@@ -97,7 +97,7 @@ class SecurityController extends AbstractController
 
             $this->addFlash('notice', 'Mot de passe mis à jour');
 
-            return $this->redirectToRoute('home_users');
+            return $this->redirectToRoute('home');
         }else {
 
             return $this->render('security/reset_password.html.twig', ['token' => $token]);
