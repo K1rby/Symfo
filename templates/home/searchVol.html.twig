@@ -29,7 +29,7 @@
        <h5>{{ users.datea|date("H:i") }}</h5>
        <br>
        <br>
-       <h5 class="prix">Prix: {{ user.prix }} </h5>
+       <h5 class="prix">Prix: {{ user.prix }}€</h5>
        <a href=" {{ path("reserver",{ "idVol":users.idVol, "idPrix":user.idPrix }) }}" class="btn waves-effect waves-light" type="submit" name="action">Réserver
        <i class="material-icons right">send</i>
      </a>

@@ -41,11 +41,15 @@
   <div class="section"></div>
   <main>
     <center>
+      {% for message in app.flashes('error') %}
+    <div class="alert alert-error">
+        <h5>{{ message }}</h5>
+    </div>
+{% endfor %}
       <img class="responsive-img" style="width: 250px;" src="/photos/Air.png" />
       <div class="section"></div>
       <div class="container">
         <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
-
           <form class="col s12" method="post">
             {% if error %}
               <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>

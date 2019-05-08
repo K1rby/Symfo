@@ -107,6 +107,11 @@ class HomeController extends AbstractController
       $get_trajet = $entityManager->getRepository(Vol::class)->findOneBy(array('idTrajet' => $id));
 
       $user = $this->getUser();
+      if ($user == NULL)
+      {
+        $this->addFlash('error', 'Vous devez être connecter pour réserver un vol');
+        return $this->redirectToRoute("app_login");
+      }
       $classe = $id_prix->getIdClasse();
       $tarif = $id_prix->getIdTarif();
       $voyage = $id_prix->getIdVoyage();
