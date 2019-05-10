@@ -4,36 +4,66 @@
 {% block body %}
 <body>
   <style>
+  h5{
+    font-family: Open Sans,Arial;
+    position: relative;
+    color: #0062e6;
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
   h5.test{
-     text-align: right;
+    text-align: right;
+    padding-left: 50%;
+  }
+  h5.tarif{
+    text-align: right;
   }
   h5.prix{
     text-align: right;
   }
+.material-icons{
+    display: inline-flex;
+    vertical-align: top;
+}
+#t{
+  line-height:24px;
+  margin-right: 44px;
+  margin-left: -14px;
+}
   </style>
   {% for users in vol %}
   <ul class="collapsible">
    <li>
-     <div class="collapsible-header"><i class="material-icons">airplanemode_active</i>
-     {{ users.idTrajet.aeroporta.ville }}
+     <div class="collapsible-header">
+       <div>
+         <i class="material-icons">airplanemode_active</i>
+     <span>{{ users.idTrajet.aeroporta.ville }}</span>
      <i class="material-icons">arrow_forward</i>
-     {{ users.idTrajet.aeroportd.ville }}
+     <span id="t">{{ users.idTrajet.aeroportd.ville }}</span>
+     <span>Duree du Voyage: {{ users.idTrajet.duree }}</span>
+   </div>
    </div>
    {% for user in prix %}
      <div class="collapsible-body">
+       <div class="row">
+         <div class="col s6">
+         <h5 class="date">Départ: {{ users.dated|date("d/m/Y H:i") }} {{ users.idTrajet.aeroportd.ville }}, {{ users.idTrajet.aeroportd.name }}</h5>
+         <h5 class="date">Arriver: {{ users.datea|date("d/m/Y H:i") }} {{ users.idTrajet.aeroporta.ville }}, {{ users.idTrajet.aeroporta.name }}</h5>
+       </div>
+          <div class="col s6">
        <h5 class="test">Classe: {{ user.idClasse.nom }}</h5>
-       <h5>Duree du Voyage: {{ users.idTrajet.duree }}</h5>
-       <br>
-       <h5>{{ users.dated|date("H:i") }}</h5>
-       <i class="material-icons prefix"> linear_scale</i>
-       <h5>{{ users.datea|date("H:i") }}</h5>
-       <br>
-       <br>
-       <h5 class="prix">Prix: {{ user.prix }}€</h5>
+       <h5 class="tarif">Tarif: {{ user.idTarif.nom }}</h5>
+     </div>
+     <br>
+     <br>
+     <div class="col s12">
+          <h5 class="prix">Prix: {{ user.prix }}€</h5>
        <a href=" {{ path("reserver",{ "idVol":users.idVol, "idPrix":user.idPrix }) }}" class="btn waves-effect waves-light" type="submit" name="action">Réserver
        <i class="material-icons right">send</i>
      </a>
+   </div>
      </div>
+   </div>
    </li>
  </ul>
  {% endfor %}

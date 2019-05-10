@@ -2,25 +2,56 @@
 
 {% block title %}Air Atlantique{% endblock %}
 {% block body %}
+<style>
+.material-icons{
+    display: inline-flex;
+     vertical-align: middle;
+}
+span{
+  font-size: 28px;
+}
+.rotate-45 {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+h5.prix{
+  margin-left: -20px;
+}
+button{
+  margin-left: -20px;
+}
+</style>
 <body>
-    {% for user in vol %}
-    {% for users in prix %}
-    <form method="post" action="{{ path("ajouter",{ "idVole":user.idVol, "idPrix":users.idPrix }) }}">
-    <h5>{{ user.dated|date("H:i") }}</h5>
-    <i class="material-icons prefix"> linear_scale</i>
-    <h5>{{ user.datea|date("H:i") }}</h5>
-    <h5>{{ user.idTrajet.duree }}</h5>
-    <h5>{{ user.idTrajet.aeroporta.ville }}</h5>
-    <h5 name="id_voyage">{{ user.idTrajet.idVoyage.idVoyage}}</h5>
-    <h5>Classe: {{ users.idClasse.nom }}</h5>
-    <h5>Tarif: {{ users.idTarif.nom }}</h5>
-    <h5>Prix: {{ users.prix }}€</h5>
-    <h5>{{ user.idTrajet.aeroportd.ville }}</h5>
-   <button class="btn waves-effect waves-light" type="submit" name="action">Continuer
-   <i class="material-icons right">send</i>
-   </button>
- </form>
-     {% endfor %}
-     {% endfor %}
+  <div class="row">
+    <div class="col s12">
+      <div class="card blue-grey darken-1">
+        <div class="card-content white-text">
+          <span style="font-size:35px; text-align:center" class="card-title">Récapitulatif de votre voyage</span>
+        </div>
+        <div class="card-content white-text">
+          {% for user in vol %}
+          {% for users in prix %}
+          <form method="post" action="{{ path("ajouter",{ "idVole":user.idVol, "idPrix":users.idPrix }) }}">
+          <i class=" medium material-icons prefix rotate-45">airplanemode_active</i><span>Votre Vol: le {{ user.dated|date("d/m/Y") }}</span>
+          <h5 class="date">Départ: {{ user.dated|date("H:i") }} {{ user.idTrajet.aeroportd.ville }}, {{ user.idTrajet.aeroportd.name }}</h5>
+          <h5 class="date">Arriver: {{ user.datea|date("H:i") }} {{ user.idTrajet.aeroporta.ville }}, {{ user.idTrajet.aeroporta.name }}</h5>
+          <i class="medium material-icons prefix">people</i><span> Passagers</span><br>
+          <h5>Tarif: {{ users.idTarif.nom }}</h5>
+          <h5>Classe: {{ users.idClasse.nom }}</h5>
+        <div class="card-action">
+          <h5 class="prix">Prix: {{ users.prix }}€</h5>
+          <button class="btn waves-effect waves-light" type="submit" name="action">Continuer
+          <i class="material-icons right">send</i>
+        </button>
+        </div>
+      </form>
+      {% endfor %}
+      {% endfor %}
+      </div>
+    </div>
+  </div>
 </body>
 {% endblock %}
