@@ -33,12 +33,22 @@ label{
       <div class="row">
         <div class="input-field col s4">
           <i class="material-icons prefix">airplanemode_active</i>
-          <input required="required" name="aeroport_depart" id="icon_prefix" type="text" class="validate">
+          <select name="aeroport_depart" required="required">
+            <option value="" disabled selected>Choisissez votre option</option>
+            <option value="Nantes">Nantes</option>
+            <option value="Bordeaux">Bordeaux</option>
+            <option value="Marseille">Marseille</option>
+          </select>
           <label for="icon_prefix">Aeroport de départ</label>
         </div>
         <div class="input-field col s4">
           <i class="material-icons prefix">airplanemode_active</i>
-          <input required="required" name="aeroport_arriver" id="icon_telephone" type="text" class="validate">
+          <select name="aeroport_arriver" required="required">
+            <option value="" disabled selected>Choisissez votre option</option>
+            <option value="Nantes">Budapest</option>
+            <option value="Paris">Paris</option>
+            <option value="Rome">Rome</option>
+          </select>
           <label for="icon_telephone">Aeroport d'arriver</label>
         </div>
         <div class="input-field col s4">
@@ -46,19 +56,23 @@ label{
           <input required="required" placeholder="Placeholder" name="date_depart" id="icon_telephone" type="date" class="validate">
           <label for="icon_telephone">Date de départ</label>
         </div>
-        <label>Choissisez votre Classe</label>
-        <select required="required" name="classe" class="browser-default">
+        <div class="input-field col s12">
+        <select required="required" name="classe">
           <option value="" disabled selected>Choisissez votre option</option>
           <option value="4">Economique</option>
           <option value="1">Business</option>
           <option value="3">Premiére</option>
         </select>
-        <label>Choissisez votre Tarif</label>
-        <select required="required" name="tarif" class="browser-default">
+          <label>Choissisez votre Classe</label>
+      </div>
+      <div class="input-field col s12">
+        <select required="required" name="tarif">
           <option value="" disabled selected>Choisissez votre option</option>
           <option value="2">Adulte</option>
           <option value="1">Enfant</option>
         </select>
+          <label>Choissisez votre Tarif</label>
+      </div>
         <div class="input-field col s4">
           <button type="submit" class="btn waves-effect waves-light">Rechercher
      <i class="material-icons right">send</i>
@@ -70,5 +84,12 @@ label{
 </div>
 </div>
 </div>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/js/materialize.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('select').material_select();
+    });
+</script>
 </body>
 {% endblock %}

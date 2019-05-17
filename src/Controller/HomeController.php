@@ -49,10 +49,8 @@ class HomeController extends AbstractController
       $recup_depart = $entityManager->getRepository(Aeroport::class)->findBy(array("ville" => $depart));
       $recup_arriver = $entityManager->getRepository(Aeroport::class)->findBy(array("ville" => $arriver));
       $getTrajet = $entityManager->getRepository(Trajet::class)->findBy(array("aeroporta" => $recup_arriver, "aeroportd" => $recup_depart));
-    //  $getVol = $entityManager->getRepository(Vol::class)->findOneBy(array('idTrajet' => $getTrajet));
+      $getVolDate = $entityManager->getRepository(Vol::class)->findBy(array('idTrajet' => $getTrajet));
       $getPrix = $entityManager->getRepository(Prix::class)->findBy(array('idClasse' => $classe, 'idTarif' => $tarif));
-    //  $query = $entityManager->createQuery( //creation de la requête
-      //  select * from vol where DATE_FORMAT(dateD, '%d/%m/%Y') = $date and id_trajet = $getTrajet);
        $queryBuilder = $entityManager->getRepository(Vol::class)->createQueryBuilder('u');
        $queryBuilder->andWhere("DATE_FORMAT(u.dated, '%Y-%m-%d') = :date and u.idTrajet = :idTrajet");
        $queryBuilder->setParameter('date', $date_depart);
@@ -60,18 +58,24 @@ class HomeController extends AbstractController
        $getVol = $queryBuilder->getQuery()->getResult();
       if ($getVol == NULL)
       {
-        return $this->render('home/error.html.twig');
+        $this->addFlash('error', 'Aucun vol a été trouver à la date correspondante');
+        return $this->render('home/searchVol.html.twig', [
+            'controller_name' => 'HomeController',
+            'vol' => $getVolDate,
+            //'id_vol' => $id,
+            //'id_voyage' => $getVoyage,
+            'prix' => $getPrix,
+        ]);
       }
-    // $id = $getVol->getIdVol();
-    //$getVoyage = $getVol->getIdVoyage();
-
-      return $this->render('home/searchVol.html.twig', [
-          'controller_name' => 'HomeController',
-          'vol' => $getVol,
-          //'id_vol' => $id,
-          //'id_voyage' => $getVoyage,
-          'prix' => $getPrix,
-      ]);
+      else {
+        return $this->render('home/searchVol.html.twig', [
+            'controller_name' => 'HomeController',
+            'vol' => $getVol,
+            //'id_vol' => $id,
+            //'id_voyage' => $getVoyage,
+            'prix' => $getPrix,
+        ]);
+      }
     }
     /**
     * @Route("/home/reserver{idVol}/{idPrix}", name="reserver")
