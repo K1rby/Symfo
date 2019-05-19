@@ -48,9 +48,10 @@ class HomeController extends AbstractController
       $entityManager = $this->getDoctrine()->getManager(); //on appelle Doctrine
       $recup_depart = $entityManager->getRepository(Aeroport::class)->findBy(array("ville" => $depart));
       $recup_arriver = $entityManager->getRepository(Aeroport::class)->findBy(array("ville" => $arriver));
-      $getTrajet = $entityManager->getRepository(Trajet::class)->findBy(array("aeroporta" => $recup_arriver, "aeroportd" => $recup_depart));
+      $getTrajet = $entityManager->getRepository(Trajet::class)->findOneBy(array("aeroporta" => $recup_arriver, "aeroportd" => $recup_depart));
       $getVolDate = $entityManager->getRepository(Vol::class)->findBy(array('idTrajet' => $getTrajet));
-      $getPrix = $entityManager->getRepository(Prix::class)->findBy(array('idClasse' => $classe, 'idTarif' => $tarif));
+      $voyage = $getTrajet->getIdVoyage();
+      $getPrix = $entityManager->getRepository(Prix::class)->findBy(array('idClasse' => $classe, 'idTarif' => $tarif, 'idVoyage' => $voyage));
        $queryBuilder = $entityManager->getRepository(Vol::class)->createQueryBuilder('u');
        $queryBuilder->andWhere("DATE_FORMAT(u.dated, '%Y-%m-%d') = :date and u.idTrajet = :idTrajet");
        $queryBuilder->setParameter('date', $date_depart);

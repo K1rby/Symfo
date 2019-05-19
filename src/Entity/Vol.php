@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Vol
  *
- * @ORM\Table(name="vol", indexes={@ORM\Index(name="id_avions", columns={"id_avions"}), @ORM\Index(name="id_aeroportD_Reel", columns={"id_aeroportD_Reel"}), @ORM\Index(name="aeroportA_Theo", columns={"aeroportA_Theo"}), @ORM\Index(name="aeroportA_Reel", columns={"aeroportA_Reel"}), @ORM\Index(name="id_trajet", columns={"id_trajet"})})
+ * @ORM\Table(name="vol", indexes={@ORM\Index(name="id_avions", columns={"id_avions"}), @ORM\Index(name="id_aeroportD_Reel", columns={"id_aeroportD_Reel"}), @ORM\Index(name="id_trajet", columns={"id_trajet"}), @ORM\Index(name="aeroportA_Theo", columns={"aeroportA_Theo"}), @ORM\Index(name="aeroportA_Reel", columns={"aeroportA_Reel"})})
  * @ORM\Entity
  */
 class Vol
